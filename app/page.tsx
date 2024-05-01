@@ -1,16 +1,18 @@
+import { options } from "./api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth/next";
+
+// Components
+import Home from "@/components/authComponents/Home";
+import Header from "@/components/authComponents/Header";
+
 // ChakraUI
-import { playFairDisplay, poppins } from "@/fonts";
-import { Box, Button, Link, Stack, Text } from "@chakra-ui/react";
+import { poppins } from "@/fonts";
+import { Box, Stack } from "@chakra-ui/react";
+import SignOut from "@/components/authComponents/SignOut";
 
-// Icons
-import TaskIcon from "../svg/SimpleIconsTask.svg";
-import {
-  PrimaryText,
-  SecondaryText,
-} from "@/components/reusableComponents/Text";
-import PhArrowBendDoubleUpRightLight from "@/icones/PhArrowBendDoubleUpRightLight";
-
-export default function Home() {
+export default async function page() {
+  const session = await getServerSession(options);
+  console.log(session);
   return (
     <Stack mt={{ sm: "8rem" }} h={{ lg: "100vh" }} color={"#fff"}>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -20,29 +22,10 @@ export default function Home() {
           bg="Primary.400"
           height={"220px"}
           width={{ sm: "85%", md: "75%" }}
-
           maxW={"350px"}
           borderRadius={"12px"}
         >
-          <Box display={"flex"} flexDirection={"column"} p={"3"} gap={"1"}>
-            <Box gap={"1"} display={"flex"}>
-              <PrimaryText
-                fontFamily={playFairDisplay.className}
-                fontWeight="600"
-                fontSize={"xl"}
-              >
-                TaskFlow
-              </PrimaryText>
-              <TaskIcon />
-            </Box>
-            <SecondaryText
-              fontFamily={poppins.className}
-              fontSize={"xs"}
-              color="#ccc"
-            >
-              Welcome to TaskFlow your Personal Task Manager
-            </SecondaryText>
-          </Box>
+          <Header />
           <Box
             className={poppins.className}
             display={"flex"}
@@ -53,22 +36,7 @@ export default function Home() {
             alignItems={"center"}
             fontSize={{ sm: "xs", md: "sm" }}
           >
-            <Text textAlign={"center"}>Click the button below to sign in</Text>
-            <Box
-              display={"flex"}
-              justifyContent={"start"}
-              alignItems={"start"}
-              flexDirection={"column"}
-              gap={"0.5rem"}
-              w={{ sm: "40 %", md: "50%" }}
-              minW={"150px"}
-            >
-              <Link w={"100%"} href="/signin">
-                <Button leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />} w={"100%"} size={{ sm: "sm" }} colorScheme="linkedin">
-                  Sign In
-                </Button>
-              </Link>
-            </Box>
+            {!session ? <Home /> : <SignOut />}
           </Box>
         </Box>
       </Box>
