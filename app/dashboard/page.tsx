@@ -1,7 +1,13 @@
 
+// Components
+import Sidebar from "@/components/dashboardComponents/Sidebar";
+
+// ChakraUi
+import { Box, Stack } from "@chakra-ui/react";
+
 
 export default function page() {
   return (
-    <div>Dashboard page</div>
+    <Stack>hello world</Stack>
   )
 }
