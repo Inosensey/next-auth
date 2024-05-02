@@ -4,10 +4,19 @@ import { Box, Button, Link, Text } from "@chakra-ui/react";
 // Icons
 import PhArrowBendDoubleUpRightLight from "@/icones/PhArrowBendDoubleUpRightLight";
 
-export default function Home() {
+// Types
+type props = {
+  homeText: string;
+  linkUrl: string;
+  buttonText: string;
+};
+
+export default function Home({ homeText, linkUrl, buttonText }: props) {
   return (
     <>
-      <Text textAlign={"center"}>Click the button below to sign in</Text>
+      <Text px={"3"} textAlign={"center"}>
+        {homeText}
+      </Text>
       <Box
         display={"flex"}
         justifyContent={"start"}
@@ -17,14 +26,14 @@ export default function Home() {
         w={{ sm: "40 %", md: "50%" }}
         minW={"150px"}
       >
-        <Link w={"100%"} href="/signin">
+        <Link w={"100%"} href={linkUrl}>
           <Button
             leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
             w={"100%"}
             size={{ sm: "sm" }}
             colorScheme="linkedin"
           >
-            Sign In
+            {buttonText}
           </Button>
         </Link>
       </Box>

@@ -3,15 +3,21 @@
 import { signIn } from "next-auth/react";
 
 // ChakraUI
-import {  poppins } from "@/fonts";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { poppins } from "@/fonts";
+import { Box, Button, Link, Text } from "@chakra-ui/react";
 
 // Icons
-import IcSharpFacebook from "@/icones/IcSharpFacebook";
 import PhGoogleLogoBold from "@/icones/PhGoogleLogoBold";
 import MdiGithub from "@/icones/MdiGithub";
+import PhArrowBendDoubleUpRightLight from "@/icones/PhArrowBendDoubleUpRightLight";
 
-export default function SignIn() {
+// Types
+type props = {
+  signInText: string;
+  isSignedIn: boolean;
+};
+
+export default function SignIn({ signInText, isSignedIn }: props) {
   return (
     <Box
       className={poppins.className}
@@ -23,7 +29,7 @@ export default function SignIn() {
       alignItems={"center"}
       fontSize={{ sm: "xs", md: "sm" }}
     >
-      <Text textAlign={"center"}>You can sign in with:</Text>
+      <Text textAlign={"center"}>{signInText}</Text>
       <Box
         display={"flex"}
         justifyContent={"start"}
@@ -33,25 +39,39 @@ export default function SignIn() {
         w={{ sm: "45%", md: "50%" }}
         minW={"150px"}
       >
-        {/* <Link w={"100%"} href={"http://localhost:3000/api/auth/signin/github"}> */}
-        <Button
-          leftIcon={<MdiGithub color="#fff" />}
-          w={"100%"}
-          size={{ sm: "sm" }}
-          colorScheme="green"
-          onClick={() => signIn("github", { callbackUrl: "/" })}
-        >
-          Github
-        </Button>
-        {/* </Link> */}
-        <Button
-          leftIcon={<PhGoogleLogoBold color="#fff" />}
-          w={"100%"}
-          size={{ sm: "sm" }}
-          colorScheme="red"
-        >
-          Google
-        </Button>
+        {isSignedIn ? (
+          <Link w={"100%"} href={"/dashboard"}>
+            <Button
+              leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
+              w={"100%"}
+              size={{ sm: "sm" }}
+              colorScheme="linkedin"
+            >
+              Dashboard
+            </Button>
+          </Link>
+        ) : (
+          <>
+            <Button
+              leftIcon={<MdiGithub color="#fff" />}
+              w={"100%"}
+              size={{ sm: "sm" }}
+              colorScheme="green"
+              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+            >
+              Github
+            </Button>
+            <Button
+              leftIcon={<PhGoogleLogoBold color="#fff" />}
+              w={"100%"}
+              size={{ sm: "sm" }}
+              colorScheme="red"
+              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            >
+              Google
+            </Button>
+          </>
+        )}
       </Box>
     </Box>
   );

@@ -1,5 +1,6 @@
-"use client"
-
+"use client";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { signOut } from "next-auth/react";
 import {
   Drawer,
   DrawerBody,
@@ -14,31 +15,45 @@ import {
   Box,
 } from "@chakra-ui/react";
 
+// Components
+import { PrimaryText } from "../reusableComponents/Text";
+
+// Fonts
+import { playFairDisplay } from "@/fonts";
+
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const handleSignOut = () => {
+    signOut();
+  };
   return (
-    <Box position={"fixed"}>
-      <Button colorScheme="teal" onClick={onOpen}>
-        Open
-      </Button>
-      <Drawer isOpen={isOpen} onClose={onClose} placement="left">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+    <>
+      <Box position={"fixed"}>
+        <Drawer isOpen={isOpen} onClose={onClose} placement="left">
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>
+              <PrimaryText
+                fontFamily={playFairDisplay.className}
+                fontWeight="600"
+                fontSize={"2xl"}
+              >
+                TaskFlow
+              </PrimaryText>
+            </DrawerHeader>
 
-          <DrawerBody>
-            <Input placeholder="Type here..." />
-          </DrawerBody>
+            <DrawerBody></DrawerBody>
 
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </Box>
+            <DrawerFooter></DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </Box>
+      <Box position={"absolute"} bottom={"15px"} right={"15px"}>
+        <Button colorScheme="teal" onClick={onOpen}>
+          <HamburgerIcon />
+        </Button>
+      </Box>
+    </>
   );
 }

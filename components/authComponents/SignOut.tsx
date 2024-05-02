@@ -5,12 +5,13 @@ import { signOut } from "next-auth/react";
 import { Box, Button, Link, Text } from "@chakra-ui/react";
 
 // Icons
-import PhArrowBendDoubleUpRightLight from "@/icones/PhArrowBendDoubleUpRightLight";
+import MdiEmoticonSadOutline from "@/icones/MdiEmoticonSadOutline";
+import MdiEmoticonHappyOutline from "@/icones/MdiEmoticonHappyOutline";
 
 export default function SignOut() {
   return (
     <>
-      <Text textAlign={"center"}>Click the button below to sign out</Text>
+      <Text textAlign={"center"}>Do you really want to Sign Out?</Text>
       <Box
         display={"flex"}
         justifyContent={"start"}
@@ -20,15 +21,27 @@ export default function SignOut() {
         w={{ sm: "40 %", md: "50%" }}
         minW={"150px"}
       >
-        <Button
-          leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
-          w={"100%"}
-          size={{ sm: "sm" }}
-          colorScheme="linkedin"
-          onClick={() => signOut()}
-        >
-          Sign Out
-        </Button>
+        <Box display={"flex"} justifyContent={"space-between"} w={"100%"}>
+          <Button
+            leftIcon={<MdiEmoticonSadOutline color="#fff" />}
+            w={"44%"}
+            size={{ sm: "sm" }}
+            colorScheme="green"
+            onClick={() => signOut({callbackUrl: "/"})}
+          >
+            Yes
+          </Button>
+          <Link w={"44%"} href="/dashboard">
+            <Button
+              leftIcon={<MdiEmoticonHappyOutline color="#fff" />}
+              w={"100%"}
+              size={{ sm: "sm" }}
+              colorScheme="red"
+            >
+              No
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </>
   );

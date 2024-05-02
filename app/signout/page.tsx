@@ -1,18 +1,14 @@
-import { options } from "./api/auth/[...nextauth]/options";
-import { getServerSession } from "next-auth/next";
-
 // Components
-import Home from "@/components/authComponents/Home";
-import Header from "@/components/authComponents/Header";
 import SignOut from "@/components/authComponents/SignOut";
+import Header from "@/components/authComponents/Header";
 
 // ChakraUI
-import { poppins } from "@/fonts";
 import { Box, Stack } from "@chakra-ui/react";
 
-export default async function page() {
-  const session = await getServerSession(options);
-  console.log(session);
+// Fonts
+import { poppins } from "@/fonts";
+
+export default function page() {
   return (
     <Stack mt={{ sm: "8rem" }} h={{ lg: "100vh" }} color={"#fff"}>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -36,19 +32,7 @@ export default async function page() {
             alignItems={"center"}
             fontSize={{ sm: "xs", md: "sm" }}
           >
-            {!session ? (
-              <Home
-                homeText="Click the button below to sign in"
-                linkUrl="/signin"
-                buttonText="Sign In"
-              />
-            ) : (
-              <Home
-              homeText="You are already Signed In. Click the button below to redirect to Dashboard"
-                linkUrl="/dashboard"
-                buttonText="Dashboard"
-              />
-            )}
+            <SignOut />
           </Box>
         </Box>
       </Box>

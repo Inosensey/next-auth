@@ -1,3 +1,6 @@
+import { options } from "../api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+
 // Components
 import SignIn from "@/components/authComponents/SignIn";
 import Header from "@/components/authComponents/Header";
@@ -5,7 +8,8 @@ import Header from "@/components/authComponents/Header";
 // ChakraUI
 import { Box, Stack } from "@chakra-ui/react";
 
-export default function page() {
+export default async function page() {
+  const session = await getServerSession(options);
   return (
     <Stack mt={{ sm: "8rem" }} h={{ lg: "100vh" }} color={"#fff"}>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -13,13 +17,20 @@ export default function page() {
           display={"flex"}
           flexDirection={"column"}
           bg="Primary.400"
-          height={"300px"}
+          height={`${session ? "220px" : "300px"}`}
           width={{ sm: "85%", md: "75%" }}
           maxW={"350px"}
           borderRadius={"12px"}
         >
           <Header />
-          <SignIn />
+          {session ? (
+            <SignIn
+              signInText="You are already Signed In. Click the button below to redirect to Dashboard"
+              isSignedIn={true}
+            />
+          ) : (
+            <SignIn signInText="You can sign in with:" isSignedIn={false} />
+          )}
         </Box>
       </Box>
     </Stack>

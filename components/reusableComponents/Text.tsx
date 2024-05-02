@@ -9,15 +9,18 @@ interface props {
   fontFamily?: string;
   fontWeight?: string;
   color?: string;
-  fontSize: string | Array<"string">;
+  fontSize: string | string[];
+  cursor?: string,
+  onClick?: () => void
 }
-
 export const PrimaryText = ({
   color,
   fontFamily,
   fontSize,
   fontWeight,
   children,
+  cursor,
+  onClick
 }: props) => {
   const primaryFontColor = useColorModeValue("Primary.200", "Primary.300");
   return (
@@ -26,6 +29,8 @@ export const PrimaryText = ({
       fontWeight={fontWeight}
       fontSize={fontSize}
       className={fontFamily}
+      cursor={cursor}
+      onClick={onClick}
     >
       {children}
     </Text>
@@ -37,6 +42,7 @@ export const SecondaryText = ({
   fontSize,
   fontWeight,
   children,
+  onClick
 }: props) => {
   const secondaryFontColor = useColorModeValue(
     "Secondary.200",
@@ -48,6 +54,7 @@ export const SecondaryText = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       className={fontFamily}
+      onClick={onClick}
     >
       {children}
     </Text>
