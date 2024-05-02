@@ -4,11 +4,11 @@ import { getServerSession } from "next-auth/next";
 // Components
 import Home from "@/components/authComponents/Home";
 import Header from "@/components/authComponents/Header";
+import SignOut from "@/components/authComponents/SignOut";
 
 // ChakraUI
 import { poppins } from "@/fonts";
 import { Box, Stack } from "@chakra-ui/react";
-import SignOut from "@/components/authComponents/SignOut";
 
 export default async function page() {
   const session = await getServerSession(options);
