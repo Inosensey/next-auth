@@ -18,20 +18,13 @@ export default async function page() {
           flexDirection={"column"}
           bg="Primary.400"
           pb={"1.2rem"}
-          height={`${session ? "220px" : "max-content"}`}
+          height={`${session ? "200px" : "max-content"}`}
           width={{ sm: "85%", md: "75%" }}
           maxW={"350px"}
           borderRadius={"12px"}
         >
           <Header />
-          {session ? (
-            <SignIn
-              signInText="You are already Signed In. Click the button below to redirect to Dashboard"
-              isSignedIn={true}
-            />
-          ) : (
-            <SignIn signInText="You can sign in with:" isSignedIn={false} />
-          )}
+          <SignIn isSignedIn={session ? true : false} />
         </Box>
       </Box>
     </Stack>

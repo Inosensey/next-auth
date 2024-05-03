@@ -45,7 +45,7 @@ const SlideDownNotification = () => {
             right: "0",
             margin: "0 auto",
             zIndex: "50",
-            color: "#fff"
+            color: "#fff",
           }}
         >
           {message}

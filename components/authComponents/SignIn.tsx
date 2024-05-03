@@ -4,22 +4,26 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 
+// Components
+import FormInput from "../reusableComponents/FormInput";
+import { PrimaryText } from "../reusableComponents/Text";
+
 // Zustand
 import { notificationStore } from "@/store/notificationStore";
 
 // ChakraUI
-import { poppins } from "@/fonts";
 import { Box, Button, Link, Text } from "@chakra-ui/react";
 
 // Icons
 import PhGoogleLogoBold from "@/icones/PhGoogleLogoBold";
 import MdiGithub from "@/icones/MdiGithub";
 import PhArrowBendDoubleUpRightLight from "@/icones/PhArrowBendDoubleUpRightLight";
-import FormInput from "../reusableComponents/FormInput";
+
+// Fonts
+import { poppins } from "@/fonts";
 
 // Types
 type props = {
-  signInText: string;
   isSignedIn: boolean;
 };
 interface credentialsType {
@@ -49,7 +53,7 @@ const onSubmitValidationInitials: onSubmitValidationType = {
   errorMessage: "",
 };
 
-export default function SignIn({ signInText, isSignedIn }: props) {
+export default function SignIn({ isSignedIn }: props) {
   // Initialize useRouter
   const router = useRouter();
 
@@ -114,76 +118,70 @@ export default function SignIn({ signInText, isSignedIn }: props) {
       display={"flex"}
       flexDirection={"column"}
       gap={"3"}
-      mt={"1rem"}
       justifyContent={"center"}
       alignItems={"center"}
       fontSize={{ sm: "xs", md: "sm" }}
     >
-      {!isSignedIn && (
-        <Box w={"90%"} display={"flex"} flexDirection={"column"} gap={"2"}>
-          <FormInput
-            state={credentials.email}
-            placeholder="Enter your Email"
-            label="Email"
-            name="email"
-            type="email"
-            onChange={handleInputChange}
-            isRequired={true}
-            isError={credentialsValidation.emailIsError}
-          />
-          <FormInput
-            state={credentials.password}
-            placeholder="Enter your Password"
-            label="Password"
-            name="password"
-            type="password"
-            onChange={handleInputChange}
-            isRequired={true}
-            isError={credentialsValidation.passwordIsError}
-          />
-          {onSubmitError.onSubmitIsError && (
-            <Text fontSize={{ sm: "xs", md: "sm" }} color={"red"}>
-              {onSubmitError.errorMessage}
-            </Text>
-          )}
-          <Button
-            leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
-            w={{ sm: "60%", md: "150px" }}
-            m={"0.4rem auto 0 auto"}
-            size={{ sm: "sm" }}
-            colorScheme="linkedin"
-            onClick={() => {
-              handleOnSubmit();
-            }}
-          >
-            Sign In
-          </Button>
-        </Box>
-      )}
-      <Box>
-        <Text textAlign={"center"}>{signInText}</Text>
-        <Box
-          display={"flex"}
-          justifyContent={"start"}
-          alignItems={"start"}
-          flexDirection={"column"}
-          gap={"0.5rem"}
-          w={{ sm: "45%", md: "50%" }}
-          minW={"150px"}
-        >
-          {isSignedIn ? (
-            <Link w={"100%"} href={"/dashboard"}>
-              <Button
-                leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
-                w={"100%"}
-                size={{ sm: "sm" }}
-                colorScheme="linkedin"
-              >
-                Dashboard
-              </Button>
-            </Link>
-          ) : (
-            <>
+      {!isSignedIn ? (
+        <>
+          <Box w={"90%"} display={"flex"} flexDirection={"column"} gap={"2"}>
+            <Box color={"#ccc"} fontSize={"0.7rem"}>
+              <Text>
+                Note: You can use the email and password below to sign in using
+                credentials.
+              </Text>
+              <Text>Email: <span style={{color: "#00ADB5", textDecoration:"underline"}}>admin@admin.com</span></Text>
+              <Text>Password: <span style={{color: "#00ADB5", textDecoration:"underline"}}>admin/123</span></Text>
+            </Box>
+            <FormInput
+              state={credentials.email}
+              placeholder="Enter your Email"
+              label="Email"
+              name="email"
+              type="email"
+              onChange={handleInputChange}
+              isRequired={true}
+              isError={credentialsValidation.emailIsError}
+            />
+            <FormInput
+              state={credentials.password}
+              placeholder="Enter your Password"
+              label="Password"
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              isRequired={true}
+              isError={credentialsValidation.passwordIsError}
+            />
+            {onSubmitError.onSubmitIsError && (
+              <Text fontSize={{ sm: "xs", md: "sm" }} color={"red"}>
+                {onSubmitError.errorMessage}
+              </Text>
+            )}
+            <Button
+              leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
+              w={{ sm: "60%", md: "150px" }}
+              m={"0.4rem auto 0 auto"}
+              size={{ sm: "sm" }}
+              colorScheme="linkedin"
+              onClick={() => {
+                handleOnSubmit();
+              }}
+            >
+              Sign In
+            </Button>
+          </Box>
+          <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+            <Text textAlign={"center"}>Or you can Sign In with:</Text>
+            <Box
+              display={"flex"}
+              justifyContent={"start"}
+              alignItems={"start"}
+              flexDirection={"column"}
+              gap={"0.5rem"}
+              w={{ sm: "45%", md: "50%" }}
+              minW={"150px"}
+            >
               <Button
                 leftIcon={<MdiGithub color="#fff" />}
                 w={"100%"}
@@ -208,10 +206,37 @@ export default function SignIn({ signInText, isSignedIn }: props) {
               >
                 Google
               </Button>
-            </>
-          )}
+            </Box>
+          </Box>
+        </>
+      ) : (
+        <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
+          <Text px={"2"} textAlign={"center"}>
+            You are already Signed In. Click the button below to redirect to
+            Dashboard
+          </Text>
+          <Box
+            display={"flex"}
+            justifyContent={"start"}
+            alignItems={"start"}
+            flexDirection={"column"}
+            gap={"0.5rem"}
+            w={{ sm: "45%", md: "50%" }}
+            minW={"150px"}
+          >
+            <Link w={"100%"} href={"/dashboard"}>
+              <Button
+                leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
+                w={"100%"}
+                size={{ sm: "sm" }}
+                colorScheme="linkedin"
+              >
+                Dashboard
+              </Button>
+            </Link>
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 }

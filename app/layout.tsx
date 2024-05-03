@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{ background: "#000" }} className={poppins.variable}>
+      <body style={{ background: "#000", position: "relative", border: "1px solid transparent" }} className={poppins.variable}>
         <SlideDownNotification />
         <Providers>{children}</Providers>
       </body>

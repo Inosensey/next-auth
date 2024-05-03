@@ -19,24 +19,27 @@ interface props {
 }
 export default function Header({ email, image, name }: props) {
   // Zustand Store
-  const {setMessage, setShowSlideNotification, setAfterSignIn} =  notificationStore((state) => state)
+  const { setMessage, setShowSlideNotification, setAfterSignIn } =
+    notificationStore((state) => state);
 
   // Notifications
   const ShowNotification = () => {
-    setMessage(`Welcome back ${name}!`);
+    setMessage(`Welcome back ${name !== undefined ? name : email}!`);
     setShowSlideNotification(true);
     hideNotificationTimer();
   };
   const hideNotificationTimer = () => {
-    const interval = setTimeout(() => setShowSlideNotification(false), 2000);
+    const interval = setTimeout(() => setShowSlideNotification(false), 1500);
     return () => clearTimeout(interval);
   };
 
   useEffect(() => {
-    const sessionStorage = JSON.parse(window.sessionStorage.getItem("notification-store") as string); 
-    if(!sessionStorage.state.afterSignIn) return
+    const sessionStorage = JSON.parse(
+      window.sessionStorage.getItem("notification-store") as string
+    );
+    if (!sessionStorage.state.afterSignIn) return;
     ShowNotification();
-    setAfterSignIn(false)
+    setAfterSignIn(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,7 +81,9 @@ export default function Header({ email, image, name }: props) {
               <MdiAccount color="#00ADB5" />
             )}
           </Box>
-          <Text fontSize={{ sm: "xs" }}>{name !== null && name !== undefined ? name : email}</Text>
+          <Text fontSize={{ sm: "xs" }}>
+            {name !== null && name !== undefined ? name : email}
+          </Text>
         </Box>
         <Link href="/signout">
           <PrimaryText cursor="pointer" fontSize={["sm"]}>
