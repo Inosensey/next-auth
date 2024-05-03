@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import Credentials from "next-auth/providers/credentials";
 
 export const options: NextAuthOptions = {
   pages: {
@@ -15,9 +16,9 @@ export const options: NextAuthOptions = {
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
-        }
-      }
+          response_type: "code",
+        },
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -26,9 +27,28 @@ export const options: NextAuthOptions = {
         params: {
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
+          response_type: "code",
+        },
+      },
+    }),
+    Credentials({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const user = { id: "1", email: "admin@admin.com", password: "admin/123" };
+
+        if (
+          credentials?.email === user.email &&
+          credentials?.password === user.password
+        ) {
+          return user;
+        } else {
+          return null;
         }
-      }
+      },
     }),
   ],
 };

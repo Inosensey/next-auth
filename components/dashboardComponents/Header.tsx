@@ -66,7 +66,7 @@ export default function Header({ email, image, name }: props) {
               image !== null || image !== undefined ? "" : "25px"
             }`}
           >
-            {image !== null || image !== undefined ? (
+            {image !== null && image !== undefined ? (
               <Image
                 boxSize="28px"
                 objectFit="cover"
@@ -78,7 +78,7 @@ export default function Header({ email, image, name }: props) {
               <MdiAccount color="#00ADB5" />
             )}
           </Box>
-          <Text fontSize={{ sm: "xs" }}>{name}</Text>
+          <Text fontSize={{ sm: "xs" }}>{name !== null && name !== undefined ? name : email}</Text>
         </Box>
         <Link href="/signout">
           <PrimaryText cursor="pointer" fontSize={["sm"]}>

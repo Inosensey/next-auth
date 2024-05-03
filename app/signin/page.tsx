@@ -17,7 +17,8 @@ export default async function page() {
           display={"flex"}
           flexDirection={"column"}
           bg="Primary.400"
-          height={`${session ? "220px" : "300px"}`}
+          pb={"1.2rem"}
+          height={`${session ? "220px" : "max-content"}`}
           width={{ sm: "85%", md: "75%" }}
           maxW={"350px"}
           borderRadius={"12px"}
