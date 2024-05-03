@@ -119,45 +119,47 @@ export default function SignIn({ signInText, isSignedIn }: props) {
       alignItems={"center"}
       fontSize={{ sm: "xs", md: "sm" }}
     >
-      <Box w={"90%"} display={"flex"} flexDirection={"column"} gap={"2"}>
-        <FormInput
-          state={credentials.email}
-          placeholder="Enter your Email"
-          label="Email"
-          name="email"
-          type="email"
-          onChange={handleInputChange}
-          isRequired={true}
-          isError={credentialsValidation.emailIsError}
-        />
-        <FormInput
-          state={credentials.password}
-          placeholder="Enter your Password"
-          label="Password"
-          name="password"
-          type="password"
-          onChange={handleInputChange}
-          isRequired={true}
-          isError={credentialsValidation.passwordIsError}
-        />
-        {onSubmitError.onSubmitIsError && (
-          <Text fontSize={{ sm: "xs", md: "sm" }} color={"red"}>
-            {onSubmitError.errorMessage}
-          </Text>
-        )}
-        <Button
-          leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
-          w={{ sm: "60%", md: "150px" }}
-          m={"0.4rem auto 0 auto"}
-          size={{ sm: "sm" }}
-          colorScheme="linkedin"
-          onClick={() => {
-            handleOnSubmit();
-          }}
-        >
-          Sign In
-        </Button>
-      </Box>
+      {!isSignedIn && (
+        <Box w={"90%"} display={"flex"} flexDirection={"column"} gap={"2"}>
+          <FormInput
+            state={credentials.email}
+            placeholder="Enter your Email"
+            label="Email"
+            name="email"
+            type="email"
+            onChange={handleInputChange}
+            isRequired={true}
+            isError={credentialsValidation.emailIsError}
+          />
+          <FormInput
+            state={credentials.password}
+            placeholder="Enter your Password"
+            label="Password"
+            name="password"
+            type="password"
+            onChange={handleInputChange}
+            isRequired={true}
+            isError={credentialsValidation.passwordIsError}
+          />
+          {onSubmitError.onSubmitIsError && (
+            <Text fontSize={{ sm: "xs", md: "sm" }} color={"red"}>
+              {onSubmitError.errorMessage}
+            </Text>
+          )}
+          <Button
+            leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
+            w={{ sm: "60%", md: "150px" }}
+            m={"0.4rem auto 0 auto"}
+            size={{ sm: "sm" }}
+            colorScheme="linkedin"
+            onClick={() => {
+              handleOnSubmit();
+            }}
+          >
+            Sign In
+          </Button>
+        </Box>
+      )}
       <Box>
         <Text textAlign={"center"}>{signInText}</Text>
         <Box
