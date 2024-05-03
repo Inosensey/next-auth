@@ -2,9 +2,8 @@ import { options } from "./api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth/next";
 
 // Components
-import Home from "@/components/authComponents/Home";
-import Header from "@/components/authComponents/Header";
-import SignOut from "@/components/authComponents/SignOut";
+import Home from "@/components/homeComponents/Home";
+import Header from "@/components/homeComponents/Header";
 
 // ChakraUI
 import { poppins } from "@/fonts";
@@ -12,7 +11,6 @@ import { Box, Stack } from "@chakra-ui/react";
 
 export default async function page() {
   const session = await getServerSession(options);
-  console.log(session);
   return (
     <Stack mt={{ sm: "8rem" }} h={{ lg: "100vh" }} color={"#fff"}>
       <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -44,7 +42,7 @@ export default async function page() {
               />
             ) : (
               <Home
-              homeText="You are already Signed In. Click the button below to redirect to Dashboard"
+                homeText="You are already Signed In. Click the button below to redirect to Dashboard"
                 linkUrl="/dashboard"
                 buttonText="Dashboard"
               />

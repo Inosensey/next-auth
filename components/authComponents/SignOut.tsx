@@ -1,6 +1,9 @@
 "use client";
 import { signOut } from "next-auth/react";
 
+// Zustand
+import { notificationStore } from "@/store/notificationStore";
+
 // ChakraUI
 import { Box, Button, Link, Text } from "@chakra-ui/react";
 
@@ -9,6 +12,9 @@ import MdiEmoticonSadOutline from "@/icones/MdiEmoticonSadOutline";
 import MdiEmoticonHappyOutline from "@/icones/MdiEmoticonHappyOutline";
 
 export default function SignOut() {
+  // Zustand Store
+  const { setAfterSignOut } = notificationStore((state) => state);
+
   return (
     <>
       <Text textAlign={"center"}>Do you really want to Sign Out?</Text>
@@ -27,7 +33,10 @@ export default function SignOut() {
             w={"44%"}
             size={{ sm: "sm" }}
             colorScheme="green"
-            onClick={() => signOut({callbackUrl: "/"})}
+            onClick={() => {
+              setAfterSignOut(true);
+              signOut({ callbackUrl: "/" });
+            }}
           >
             Yes
           </Button>

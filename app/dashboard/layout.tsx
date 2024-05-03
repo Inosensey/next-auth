@@ -16,7 +16,6 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(options);
-  console.log(session)
   return (
     <Stack h={"100vh"}>
       <Sidebar />

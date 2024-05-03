@@ -1,6 +1,6 @@
 // Components
 import SignOut from "@/components/authComponents/SignOut";
-import Header from "@/components/authComponents/Header";
+import Header from "@/components/homeComponents/Header";
 
 // ChakraUI
 import { Box, Stack } from "@chakra-ui/react";

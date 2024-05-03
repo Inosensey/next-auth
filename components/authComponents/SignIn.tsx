@@ -2,6 +2,9 @@
 
 import { signIn } from "next-auth/react";
 
+// Zustand
+import { notificationStore } from "@/store/notificationStore";
+
 // ChakraUI
 import { poppins } from "@/fonts";
 import { Box, Button, Link, Text } from "@chakra-ui/react";
@@ -18,6 +21,9 @@ type props = {
 };
 
 export default function SignIn({ signInText, isSignedIn }: props) {
+  // Zustand Store
+  const { setAfterSignIn } = notificationStore((state)=>state);
+
   return (
     <Box
       className={poppins.className}
@@ -57,7 +63,10 @@ export default function SignIn({ signInText, isSignedIn }: props) {
               w={"100%"}
               size={{ sm: "sm" }}
               colorScheme="green"
-              onClick={() => signIn("github", { callbackUrl: "/dashboard" })}
+              onClick={() => {
+                setAfterSignIn(true);
+                signIn("github", { callbackUrl: "/dashboard" });
+              }}
             >
               Github
             </Button>
@@ -66,7 +75,10 @@ export default function SignIn({ signInText, isSignedIn }: props) {
               w={"100%"}
               size={{ sm: "sm" }}
               colorScheme="red"
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              onClick={() => {
+                setAfterSignIn(true);
+                signIn("google", { callbackUrl: "/dashboard" });
+              }}
             >
               Google
             </Button>

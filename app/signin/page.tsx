@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 
 // Components
 import SignIn from "@/components/authComponents/SignIn";
-import Header from "@/components/authComponents/Header";
+import Header from "@/components/homeComponents/Header";
 
 // ChakraUI
 import { Box, Stack } from "@chakra-ui/react";

@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 
 // Components
 import { PrimaryText } from "../reusableComponents/Text";
@@ -7,6 +8,9 @@ import { PrimaryText } from "../reusableComponents/Text";
 import { Box, Text, Image, Link } from "@chakra-ui/react";
 import MdiAccount from "@/icones/MdiAccount";
 
+// Zustand
+import { notificationStore } from "@/store/notificationStore";
+
 // Types
 interface props {
   name?: string | null;
@@ -14,6 +18,28 @@ interface props {
   image?: string | null;
 }
 export default function Header({ email, image, name }: props) {
+  // Zustand Store
+  const {setMessage, setShowSlideNotification, setAfterSignIn} =  notificationStore((state) => state)
+
+  // Notifications
+  const ShowNotification = () => {
+    setMessage(`Welcome back ${name}!`);
+    setShowSlideNotification(true);
+    hideNotificationTimer();
+  };
+  const hideNotificationTimer = () => {
+    const interval = setTimeout(() => setShowSlideNotification(false), 5000);
+    return () => clearTimeout(interval);
+  };
+
+  useEffect(() => {
+    const sessionStorage = JSON.parse(window.sessionStorage.getItem("notification-store") as string); 
+    if(!sessionStorage.state.afterSignIn) return
+    ShowNotification();
+    setAfterSignIn(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Box
       display={"flex"}
@@ -47,7 +73,6 @@ export default function Header({ email, image, name }: props) {
                 src={image!}
                 alt="user-image"
                 borderRadius={"25px"}
-                
               />
             ) : (
               <MdiAccount color="#00ADB5" />

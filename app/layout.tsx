@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 
+// Components
+import SlideDownNotification from "@/components/notificationComponents/SlideDownNotification";
+
 // Chakra UI
 import { Providers } from "@/utils/Providers";
 
@@ -22,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ background: "#000" }} className={poppins.variable}>
+        <SlideDownNotification />
         <Providers>{children}</Providers>
       </body>
     </html>
