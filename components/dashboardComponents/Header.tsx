@@ -29,7 +29,7 @@ export default function Header({ email, image, name }: props) {
     hideNotificationTimer();
   };
   const hideNotificationTimer = () => {
-    const interval = setTimeout(() => setShowSlideNotification(false), 1500);
+    const interval = setTimeout(() => setShowSlideNotification(false), 1000);
     return () => clearTimeout(interval);
   };
 
