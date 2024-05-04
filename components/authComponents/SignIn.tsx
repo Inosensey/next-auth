@@ -88,6 +88,7 @@ export default function SignIn({ isSignedIn }: props) {
         onSubmitIsError: false,
         errorMessage: "",
       }));
+      setAfterSignIn(true);
       router.push("/dashboard");
     }
   };
