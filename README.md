@@ -1,17 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Links
+- Github: https://github.com/Inosensey/next-auth
+- Vercel: https://next-auth-test-drab.vercel.app/
 
 ## Getting Started
 
-First, run the development server:
-
+Step 1: Fork or Download the Project
+You can either fork the project using GitHub or download it directly as a zip file. Choose the method that suits you best.
+Step 2: Navigate to the Project Directory
+Open your terminal or command prompt and navigate to the directory where you have saved the project. You can use the cd command followed by the path to the project directory.
+```bash
+cd /path/to/project
+```
+Step 3: Install Dependencies
+Run the following command to install the project dependencies:
+```bash
+npm install
+```
+Step 4: Start the Development Server
+Once the dependencies are installed, start the development server by running:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##### Additional Note Regarding Next Auth
+###### If you choose the credentials option for authentication, you can use the following credentials to test the feature:
+- Email: admin@admin.com
+- Password: admin/123
