@@ -108,10 +108,12 @@ export default function SignIn({ isSignedIn }: props) {
       }
     } else if (provider === "github") {
       setIsSubmitting((prev) => ({ ...prev, gitHubSubmit: true }));
+      setAfterSignIn(true);
       await signIn(provider, { callbackUrl: "/dashboard" });
       setIsSubmitting((prev) => ({ ...prev, gitHubSubmit: false }));
     } else if (provider === "google") {
       setIsSubmitting((prev) => ({ ...prev, googleSubmit: true }));
+      setAfterSignIn(true);
       await signIn(provider, { callbackUrl: "/dashboard" });
       setIsSubmitting((prev) => ({ ...prev, googleSubmit: false }));
     } else {
