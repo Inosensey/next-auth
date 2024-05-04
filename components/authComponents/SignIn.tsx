@@ -26,18 +26,23 @@ import { poppins } from "@/fonts";
 type props = {
   isSignedIn: boolean;
 };
-interface credentialsType {
+type credentialsType = {
   email: string;
   password: string;
-}
-interface credentialValidationType {
+};
+type credentialValidationType = {
   emailIsError: boolean | null;
   passwordIsError: boolean | null;
-}
-interface onSubmitValidationType {
+};
+type onSubmitValidationType = {
   onSubmitIsError: boolean;
   errorMessage: string;
-}
+};
+type isSubmittingType = {
+  credentialsSubmit: boolean;
+  gitHubSubmit: boolean;
+  googleSubmit: boolean;
+};
 
 // Input Initials
 const credentialInitials: credentialsType = {
@@ -52,6 +57,11 @@ const onSubmitValidationInitials: onSubmitValidationType = {
   onSubmitIsError: false,
   errorMessage: "",
 };
+const isSubmittingInitials: isSubmittingType = {
+  credentialsSubmit: false,
+  gitHubSubmit: false,
+  googleSubmit: false,
+};
 
 export default function SignIn({ isSignedIn }: props) {
   // Initialize useRouter
@@ -65,31 +75,48 @@ export default function SignIn({ isSignedIn }: props) {
   const [onSubmitError, setOnSubmitError] = useState<onSubmitValidationType>(
     onSubmitValidationInitials
   );
+  const [isSubmitting, setIsSubmitting] =
+    useState<isSubmittingType>(isSubmittingInitials);
 
   // Zustand Store
   const { setAfterSignIn } = notificationStore((state) => state);
 
   // Events
-  const handleOnSubmit = async () => {
-    const res = await signIn("credentials", {
-      email: credentials.email,
-      password: credentials.password,
-      redirect: false,
-    });
-    if (!res?.ok) {
-      setOnSubmitError((prev) => ({
-        ...prev,
-        onSubmitIsError: true,
-        errorMessage: "Error! Check your credentials again.",
-      }));
+  const handleOnSubmit = async (provider: string) => {
+    let res;
+    if (provider === "credentials") {
+      setIsSubmitting((prev) => ({ ...prev, credentialsSubmit: true }));
+      res = await signIn(provider, {
+        email: credentials.email,
+        password: credentials.password,
+        redirect: false,
+      });
+      setIsSubmitting((prev) => ({ ...prev, credentialsSubmit: false }));
+      if (!res?.ok) {
+        setOnSubmitError((prev) => ({
+          ...prev,
+          onSubmitIsError: true,
+          errorMessage: "Error! Check your credentials again.",
+        }));
+      } else {
+        setOnSubmitError((prev) => ({
+          ...prev,
+          onSubmitIsError: false,
+          errorMessage: "",
+        }));
+        setAfterSignIn(true);
+        router.push("/dashboard");
+      }
+    } else if (provider === "github") {
+      setIsSubmitting((prev) => ({ ...prev, gitHubSubmit: true }));
+      await signIn(provider, { callbackUrl: "/dashboard" });
+      setIsSubmitting((prev) => ({ ...prev, gitHubSubmit: false }));
+    } else if (provider === "google") {
+      setIsSubmitting((prev) => ({ ...prev, googleSubmit: true }));
+      await signIn(provider, { callbackUrl: "/dashboard" });
+      setIsSubmitting((prev) => ({ ...prev, googleSubmit: false }));
     } else {
-      setOnSubmitError((prev) => ({
-        ...prev,
-        onSubmitIsError: false,
-        errorMessage: "",
-      }));
-      setAfterSignIn(true);
-      router.push("/dashboard");
+      return "Provider not found";
     }
   };
   const handleValidation = (name: string, value: string) => {
@@ -131,8 +158,18 @@ export default function SignIn({ isSignedIn }: props) {
                 Note: You can use the email and password below to sign in using
                 credentials.
               </Text>
-              <Text>Email: <span style={{color: "#00ADB5", textDecoration:"underline"}}>admin@admin.com</span></Text>
-              <Text>Password: <span style={{color: "#00ADB5", textDecoration:"underline"}}>admin/123</span></Text>
+              <Text>
+                Email:{" "}
+                <span style={{ color: "#00ADB5", textDecoration: "underline" }}>
+                  admin@admin.com
+                </span>
+              </Text>
+              <Text>
+                Password:{" "}
+                <span style={{ color: "#00ADB5", textDecoration: "underline" }}>
+                  admin/123
+                </span>
+              </Text>
             </Box>
             <FormInput
               state={credentials.email}
@@ -163,10 +200,12 @@ export default function SignIn({ isSignedIn }: props) {
               leftIcon={<PhArrowBendDoubleUpRightLight color="#fff" />}
               w={{ sm: "60%", md: "150px" }}
               m={"0.4rem auto 0 auto"}
+              loadingText="Processing"
+              isLoading={isSubmitting.credentialsSubmit}
               size={{ sm: "sm" }}
               colorScheme="linkedin"
               onClick={() => {
-                handleOnSubmit();
+                handleOnSubmit("credentials");
               }}
             >
               Sign In
@@ -188,9 +227,10 @@ export default function SignIn({ isSignedIn }: props) {
                 w={"100%"}
                 size={{ sm: "sm" }}
                 colorScheme="green"
+                loadingText="Redirecting"
+                isLoading={isSubmitting.gitHubSubmit}
                 onClick={() => {
-                  setAfterSignIn(true);
-                  signIn("github", { callbackUrl: "/dashboard" });
+                  handleOnSubmit("github");
                 }}
               >
                 Github
@@ -200,9 +240,10 @@ export default function SignIn({ isSignedIn }: props) {
                 w={"100%"}
                 size={{ sm: "sm" }}
                 colorScheme="red"
+                loadingText="Redirecting"
+                isLoading={isSubmitting.googleSubmit}
                 onClick={() => {
-                  setAfterSignIn(true);
-                  signIn("google", { callbackUrl: "/dashboard" });
+                  handleOnSubmit("google");
                 }}
               >
                 Google
