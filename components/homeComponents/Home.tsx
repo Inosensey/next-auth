@@ -29,7 +29,7 @@ export default function Home({ homeText, linkUrl, buttonText }: props) {
     hideNotificationTimer();
   };
   const hideNotificationTimer = () => {
-    const interval = setTimeout(() => setShowSlideNotification(false), 1500);
+    const interval = setTimeout(() => setShowSlideNotification(false), 1000);
     return () => clearTimeout(interval);
   };
 
