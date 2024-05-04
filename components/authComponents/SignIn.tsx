@@ -6,7 +6,6 @@ import { signIn } from "next-auth/react";
 
 // Components
 import FormInput from "../reusableComponents/FormInput";
-import { PrimaryText } from "../reusableComponents/Text";
 
 // Zustand
 import { notificationStore } from "@/store/notificationStore";

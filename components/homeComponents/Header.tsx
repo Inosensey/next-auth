@@ -1,6 +1,11 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 // ChakraUI
-import { playFairDisplay, poppins } from "@/fonts";
 import { Box } from "@chakra-ui/react";
+
+// Fonts
+import { playFairDisplay, poppins } from "@/fonts";
 
 // Icons
 import TaskIcon from "@/svg/SimpleIconsTask.svg";
@@ -10,6 +15,7 @@ import {
 } from "@/components/reusableComponents/Text";
 
 export default function Header() {
+  const router = useRouter();
   return (
     <Box display={"flex"} flexDirection={"column"} p={"3"} gap={"1"}>
       <Box gap={"1"} display={"flex"}>

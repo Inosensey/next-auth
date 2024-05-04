@@ -11,6 +11,7 @@ interface props {
   color?: string;
   fontSize: string | string[];
   cursor?: string,
+  textDecor?: string,
   onClick?: () => void
 }
 export const PrimaryText = ({
@@ -20,6 +21,7 @@ export const PrimaryText = ({
   fontWeight,
   children,
   cursor,
+  textDecor,
   onClick
 }: props) => {
   const primaryFontColor = useColorModeValue("Primary.200", "Primary.300");
@@ -30,6 +32,7 @@ export const PrimaryText = ({
       fontSize={fontSize}
       className={fontFamily}
       cursor={cursor}
+      textDecor={textDecor}
       onClick={onClick}
     >
       {children}
